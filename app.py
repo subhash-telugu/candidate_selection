@@ -6,9 +6,10 @@ from fastapi import FastAPI, HTTPException
 from typing import List
 
 
-from src.candiate_selection_process.main import SelectionFlow
-from src.candiate_selection_process.job_description import JOB_DESCRIPTION
-
+# from candiate_selection.main import SelectionFlow
+# from candiate_selection.job_description import JOB_DESCRIPTION
+from src.candidate_selection.main import SelectionFlow
+from src.candidate_selection.job_description import JOB_DESCRIPTION
 
 app = FastAPI(
     title="Candidate Selection Flow API",

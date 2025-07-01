@@ -5,11 +5,11 @@ import asyncio
 from crewai.flow.flow import Flow,start,listen
 from pydantic import BaseModel
 from typing import List
-from src.candidate_selection_process.models import candidate,candidateScore,scoredcandidate
-from src.candidate_selection_process.crews.candidate_scoring.crew import ScoreCrew
-from src.candidate_selection_process.crews.emails_to_candidates.crew import HrResponse
-from src.candidate_selection_process.job_description import JOB_DESCRIPTION
-from src.candidate_selection_process.utils.candidateUtils import combined_scored_and_candidated
+from src.candidate_selection.models import candidate,candidateScore,scoredcandidate
+from src.candidate_selection.crews.candidate_scoring.crew import ScoreCrew
+from src.candidate_selection.crews.emails_to_candidates.crew import HrResponse
+from src.candidate_selection.job_description import JOB_DESCRIPTION
+from src.candidate_selection.utils.candidateUtils import combined_scored_and_candidated
 
 
 

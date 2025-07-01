@@ -1,4 +1,4 @@
-from src.candidate_selection_process.models import candidate,candidateScore,scoredcandidate
+from src.candidate_selection.models import candidate,candidateScore,scoredcandidate
 import csv
 
 def combined_scored_and_candidated(candidate_scores:list[candidateScore],candidates:list[candidate]) ->list[scoredcandidate]:

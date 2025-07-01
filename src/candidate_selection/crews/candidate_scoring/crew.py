@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from src.candidate_selection_process.models import candidateScore
+from src.candidate_selection.models import candidateScore
 
 
 @CrewBase
