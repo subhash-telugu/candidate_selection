@@ -1,0 +1,29 @@
+[project]
+name = "candiate_selection"
+version = "0.1.0"
+description = "candiate_selection using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.121.0,<1.0.0",
+    "uvicorn",
+    "fastapi"
+]
+
+[project.scripts]
+candiate_selection = "candiate_selection.main:run"
+run_crew = "candiate_selection.main:run"
+train = "candiate_selection.main:train"
+replay = "candiate_selection.main:replay"
+test = "candiate_selection.main:test"
+
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/candiate_evaluation"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
