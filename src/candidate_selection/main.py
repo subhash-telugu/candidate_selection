@@ -43,7 +43,7 @@ class SelectionFlow(Flow[SelectionState]):
     async def candidate_scoring(self):
         tasks=[]  
         candidates=self.state.candidates
-        async def single_candidate_evaluation(candidate:candidate):
+        async def single_candidate_evaluation(candidate):
             
             result=await (ScoreCrew().crew().kickoff_async(inputs={
                 'candidate_id':candidate.id,

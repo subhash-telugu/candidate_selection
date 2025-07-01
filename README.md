@@ -43,6 +43,42 @@ This example, unmodified, will run the create a `report.md` file with the output
 
 The candiate_selection Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
 
+##Async Flow: FastAPI + CrewAI
+
+
+This is how your asynchronous flow executes under the hood:
+
+FastAPI Event Loop (Main Thread)
+│
+├── Request comes in
+├── async def kickoff_candidate_selection() starts
+├── await loop.run_in_executor(...) 
+│   │
+│   ├── Spawns a separate thread ──────────────┐
+│   │                                          │
+│   └── Pauses execution, waiting for result   │
+│                                              │
+│                                   🧵 Separate Thread
+│                                   │
+│                                   ├── run_selection_flow()
+│                                   ├── SelectionFlow().kickoff()
+│                                   ├──── Calls async steps inside a new event loop:
+│                                   │     ├── candidate_scoring() → await asyncio.gather(...)
+│                                   │     ├── email_generation() → await asyncio.gather(...)
+│                                   │     └── other sync steps
+│                                   └── Returns top candidates
+│                                              │
+├── FastAPI resumes with result ←──────────────┘
+├── Returns HTTP response with JSON
+└── Done ✅
+
+
+
+
+
+
+
+
 ## Support
 
 For support, questions, or feedback regarding the CandiateSelection Crew or crewAI.
