@@ -8,7 +8,7 @@ COPY . /app
 RUN uv lock && uv sync
 
 
-EXPOSE 8069
+EXPOSE 8001
 
-CMD ["python", 'app.py']
+CMD ["python", "app.py"]
 
