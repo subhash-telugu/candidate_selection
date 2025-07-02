@@ -5,8 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: python_app
-    command: python -m uvicorn app:app --reload --host 0.0.0.0 --port 8001
+    container_name: candidate_selection_api
     volumes:
       - .:/app
     env_file:
@@ -18,6 +17,9 @@ services:
       - PYTHONPATH=/app
     networks:
       - app-network
+    # Optional: remove command, so Dockerfile CMD is used
+    # OR match correct module path:
+    command: uvicorn src.candidate_selection.web.app:app --host 0.0.0.0 --port 8001 --reload
 
 networks:
   app-network:
