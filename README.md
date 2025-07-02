@@ -47,7 +47,7 @@ The candiate_selection Crew is composed of multiple AI agents, each with unique 
 
 
 This is how your asynchronous flow executes under the hood:
-
+```bash
 FastAPI Event Loop (Main Thread)
 │
 ├── Request comes in
@@ -71,7 +71,7 @@ FastAPI Event Loop (Main Thread)
 ├── FastAPI resumes with result ←──────────────┘
 ├── Returns HTTP response with JSON
 └── Done ✅
-
+```
 
 
 
