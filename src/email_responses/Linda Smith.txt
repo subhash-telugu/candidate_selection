@@ -1,0 +1,17 @@
+Subject: Following Up: Full-Stack Developer Position at XYZ Technologies
+
+Dear Linda,
+
+Thank you for your interest in the Full-Stack Developer position at XYZ Technologies and for taking the time to submit your application. We were very impressed with your background and experience.
+
+Your expertise in front-end technologies, particularly React and Next.js, stood out to us. We also found your recent exploration of AI integrations with Vercel AI SDK and CrewAI to be very relevant to some of the exciting projects we have in development. Your focus on creating seamless user experiences and optimizing performance aligns well with our company's values.
+
+We would like to schedule a Zoom call to discuss your qualifications further and provide you with more information about the role and our team. Would you be available for a call sometime in the next few days? Please let me know what times work best for you.
+
+We look forward to hearing from you soon.
+
+Sincerely,
+
+Subhash
+HR Coordinator
+XYZ Technologies Pvt Ltd

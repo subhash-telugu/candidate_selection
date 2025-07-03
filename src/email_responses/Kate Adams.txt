@@ -1,0 +1,19 @@
+```
+Subject: Following Up: Front-End Developer Application - Kate Adams
+
+Dear Kate,
+
+Thank you for your interest in the Front-End Developer position at XYZ Technologies Pvt Ltd and for taking the time to submit your application.
+
+We were very impressed with your background, particularly your enthusiasm for AI and your experience with front-end development. Your experience with the Vercel AI SDK and CrewAI, as well as your contributions to projects leveraging AI for user interaction and personalization, aligns well with our current needs and projects.
+
+We would like to invite you to a Zoom call to discuss your qualifications and our open position in more detail. Would you be available for a call sometime in the next few days? Please let me know what times work best for you.
+
+We look forward to hearing from you soon.
+
+Sincerely,
+
+Subhash
+HR Coordinator
+XYZ Technologies Pvt Ltd
+```
