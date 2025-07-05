@@ -26,7 +26,7 @@ The core of this application is a **CrewAI Flow** (`SelectionFlow`) defined in `
 ---
 
 ## Project Structure
-bash```
+```bash
 .
 ├── src/
 │   ├── candidate_selection/
