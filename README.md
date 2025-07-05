@@ -1,152 +1,148 @@
-🧠 Candidate Selection AI
-This project automates the candidate evaluation and communication process using a multi-agent system powered by CrewAI. It streamlines the hiring workflow by programmatically scoring candidates against job descriptions, identifying top profiles, and generating personalized email responses.
+# Candidate Selection AI
 
-🚀 Features
-Automated Candidate Scoring: Evaluates candidate resumes/bios against a job description and assigns a compatibility score.
+This project automates the candidate evaluation and communication process using a multi-agent system powered by **CrewAI**. It streamlines the hiring workflow by programmatically scoring candidates against job descriptions, identifying top profiles, and generating personalized email responses.
 
-Top Candidate Identification: Ranks and selects the most suitable candidates based on scores.
+---
 
-Personalized Email Generation: Crafts customized email responses for selected and rejected candidates.
+## Features
 
-Asynchronous Processing: Uses asyncio for efficient, parallel evaluation and communication.
+* **Automated Candidate Scoring:** Evaluates candidate resumes/bios against a given job description to assign a compatibility score.
+* **Top Candidate Identification:** Ranks and selects the most suitable candidates based on their scores.
+* **Personalized Email Generation:** Crafts customized email responses for both selected and unselected candidates.
+* **Asynchronous Processing:** Leverages `asyncio` for efficient, parallel processing of candidate evaluations and email generation.
+* **Modular Agent Design:** Utilizes CrewAI to create specialized agents for each step of the selection process.
 
-Modular Agent Design: Leverages CrewAI for a composable, maintainable, agent-based architecture.
+---
 
-⚙️ How It Works
-The core logic resides in SelectionFlow (main.py) and orchestrates the following steps:
+## How It Works
 
-load_candidates
-Loads candidate data from src/candidate_selection/leads.csv.
+The core of this application is a **CrewAI Flow** (`SelectionFlow`) defined in `main.py` that orchestrates several key steps:
 
-candidate_scoring
-Uses ScoreCrew to asynchronously score each candidate’s bio against a job description (job_description.py).
+1.  **`load_candidates`**: Reads candidate data from the `leads.csv` file located in the `src/candidate_selection/` directory.
+2.  **`candidate_scoring`**: Asynchronously evaluates each candidate's bio against the `JOB_DESCRIPTION` (defined in `src/candidate_selection/job_description.py`) using a dedicated `ScoreCrew` to generate a `candidateScore`.
+3.  **`top_candidate_selection`**: Sorts the scored candidates and identifies the top 3 based on their compatibility scores.
+4.  **`email_generation`**: Asynchronously generates and saves personalized email responses for all candidates (acceptance for top candidates, rejection for others) using an `HrResponse` crew. Emails are saved as `.txt` files in the `email_responses/` directory.
 
-top_candidate_selection
-Sorts candidates based on scores and selects the top 3.
+---
 
-email_generation
-Generates personalized emails via HrResponse crew and saves them to email_responses/.
-
-🗂 Project Structure
-bash
-Copy
-Edit
+## Project Structure
+bash```
 .
 ├── src/
 │   ├── candidate_selection/
 │   │   ├── crews/
 │   │   │   ├── candidate_scoring/
 │   │   │   │   ├── config/
-│   │   │   │   ├── __init__.py
+│   │   │   │   ├── init.py
 │   │   │   │   └── crew.py
 │   │   │   └── emails_to_candidates/
 │   │   │       ├── config/
-│   │   │       ├── __init__.py
+│   │   │       ├── init.py
 │   │   │       └── crew.py
 │   │   ├── tools/
 │   │   ├── utils/
 │   │   │   └── candidateUtils.py
 │   │   ├── web/
-│   │   ├── __init__.py
+│   │   ├── init.py
 │   │   ├── job_description.py
 │   │   ├── leads.csv
 │   │   ├── main.py
 │   │   └── models.py
-├── email_responses/          # Output emails generated
-├── .env                      # API keys (excluded from version control)
+├── email_responses/ (created after running)
+├── .env
 ├── .gitignore
 ├── Dockerfile
 └── README.md
-🧑‍💻 Getting Started
-✅ Prerequisites
-Python 3.9+
+```
 
-Docker (optional, for containerization)
+---
 
-📦 Installation
-Clone the repository:
+## Getting Started
 
-bash
-Copy
-Edit
-git clone https://github.com/subhash-telugu/candidate_selection.git
-cd candidate_selection
-Create and activate a virtual environment:
+### Prerequisites
 
-bash
-Copy
-Edit
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
-Install dependencies:
+* Python 3.9+
+* Docker (optional, for containerized deployment)
 
-bash
-Copy
-Edit
-pip install crewai pydantic
-You may also need:
+### Installation
 
-bash
-Copy
-Edit
-pip install openai  # or google-generativeai, depending on your LLM
-🔐 Set Up API Keys
-Create a .env file in the project root:
+1.  **Clone the repository:**
 
-bash
-Copy
-Edit
-GOOGLE_API_KEY="your_google_api_key_here"
-# or for OpenAI:
-# OPENAI_API_KEY="your_openai_key_here"
-⚠️ .env is already included in .gitignore to protect secrets.
+    ```bash
+    git clone [https://github.com/subhash-telugu/candidate_selection.git](https://github.com/subhash-telugu/candidate_selection.git)
+    cd candidate_selection
+    ```
 
-▶️ Running the Application
-Prepare candidate data:
-Add candidates in src/candidate_selection/leads.csv using columns like id, name, bio.
+2.  **Create a virtual environment (recommended):**
 
-Set your job description:
-Update JOB_DESCRIPTION in src/candidate_selection/job_description.py.
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: `venv\Scripts\activate`
+    ```
 
-Run the application:
+3.  **Install dependencies:**
+    (You will need a `requirements.txt` file in your project. For now, here are the likely main dependencies.)
 
-bash
-Copy
-Edit
-python src/candidate_selection/main.py
-Ensure kickoff() is invoked in main.py.
+    ```bash
+    pip install crewai pydantic
+    # You might also need specific LLM client libraries (e.g., openai, google-generativeai)
+    # depending on your crew implementations and .env configuration.
+    ```
 
-📤 Output
-Generated email responses are saved in the email_responses/ folder.
+4.  **Set up your API Key:**
+    Create a `.env` file in the root directory of the project (if it doesn't exist) and add your LLM API key. For example:
 
-Console will show evaluation progress and selected candidates.
+    ```
+   
+    # Google Gemini:
+    # GOOGLE_API_KEY="your_google_api_key_here"
+    ```
+    *Important: Make sure to never commit your `.env` file to version control (it's already listed in `.gitignore`, which is good practice!).*
 
-🔧 Customization
-What You Want to Change	How to Do It
-Candidate Data	Edit leads.csv
-Job Description	Modify job_description.py
-Scoring or Email Logic	Update crew.py in respective crews/ subfolders
-Number of Top Candidates	Change the slice in top_candidate_selection (e.g. l[0:5])
-LLM Model/Provider	Update agent config/ or .env as per provider’s API
+### Running the Application
 
-🧰 Technologies Used
-Python: Core language
+1.  **Prepare `leads.csv`:**
+    Ensure your `leads.csv` file is located at `src/candidate_selection/leads.csv` and contains candidate data with columns corresponding to your `candidate` Pydantic model (e.g., `id`, `name`, `bio`).
 
-CrewAI: Multi-agent orchestration
+2.  **Define `JOB_DESCRIPTION`:**
+    Update the `JOB_DESCRIPTION` variable in `src/candidate_selection/job_description.py` with the actual job description you want to use for candidate evaluation.
 
-Pydantic: Data validation
+3.  **Run the main script:**
 
-asyncio: For async workflows
+    ```bash
+    python src/candidate_selection/main.py
+    ```
+    *(Note: Ensure the `kickoff()` method call within `main.py` is uncommented or called appropriately for direct execution of the flow.)*
 
-LLM APIs: Google Gemini, OpenAI, etc.
+---
 
-📦 Docker Support (Optional)
-A Dockerfile is included for containerized deployment. Example build/run:
+## Output
 
-bash
-Copy
-Edit
-docker build -t candidate-ai .
-docker run --env-file .env candidate-ai
-📬 Contact
-Feel free to contribute or raise issues on the GitHub Repository.
+After successful execution, you will find generated email responses in the `email_responses/` directory, with filenames corresponding to the candidate's name. The console will also display progress messages about candidate evaluation and email saving.
+
+---
+
+## Customization
+
+* **Candidate Data:** Modify `src/candidate_selection/leads.csv` to include your specific candidate information.
+* **Job Description:** Update `src/candidate_selection/job_description.py` for different roles.
+* **Agent Logic:** Adjust the `crew.py` files within `src/candidate_selection/crews/` (e.g., `candidate_scoring/crew.py`, `emails_to_candidates/crew.py`) to refine the scoring and email generation logic of the AI agents.
+* **Number of Top Candidates:** Change `l[0:3]` in the `top_candidate_selection` method in `main.py` to select a different number of top candidates.
+* **LLM Model:** Configure your CrewAI agents to use different LLM models by adjusting the `config` files within the `crews` subdirectories or by setting appropriate environment variables.
+
+---
+
+## Technologies Used
+
+* **Python**
+* **CrewAI**: For multi-agent orchestration and workflow management.
+* **Pydantic**: For robust data validation and settings management.
+* **`asyncio`**: For efficient asynchronous operations, allowing parallel processing.
+
+---
+
+## Contributing
+
+Feel free to fork this repository, open issues, or submit pull requests.
+
+---
