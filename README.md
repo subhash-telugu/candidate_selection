@@ -1,31 +1,36 @@
-Candidate Selection AI
+🧠 Candidate Selection AI
 This project automates the candidate evaluation and communication process using a multi-agent system powered by CrewAI. It streamlines the hiring workflow by programmatically scoring candidates against job descriptions, identifying top profiles, and generating personalized email responses.
 
-Features
-Automated Candidate Scoring: Evaluates candidate resumes/bios against a given job description to assign a compatibility score.
+🚀 Features
+Automated Candidate Scoring: Evaluates candidate resumes/bios against a job description and assigns a compatibility score.
 
-Top Candidate Identification: Ranks and selects the most suitable candidates based on their scores.
+Top Candidate Identification: Ranks and selects the most suitable candidates based on scores.
 
-Personalized Email Generation: Crafts customized email responses for both selected and unselected candidates.
+Personalized Email Generation: Crafts customized email responses for selected and rejected candidates.
 
-Asynchronous Processing: Leverages asyncio for efficient, parallel processing of candidate evaluations and email generation.
+Asynchronous Processing: Uses asyncio for efficient, parallel evaluation and communication.
 
-Modular Agent Design: Utilizes CrewAI to create specialized agents for each step of the selection process.
+Modular Agent Design: Leverages CrewAI for a composable, maintainable, agent-based architecture.
 
-How It Works
-The core of this application is a CrewAI Flow (SelectionFlow) defined in main.py that orchestrates several key steps:
+⚙️ How It Works
+The core logic resides in SelectionFlow (main.py) and orchestrates the following steps:
 
-load_candidates: Reads candidate data from the leads.csv file located in the src/candidate_selection/ directory.
+load_candidates
+Loads candidate data from src/candidate_selection/leads.csv.
 
-candidate_scoring: Asynchronously evaluates each candidate's bio against the JOB_DESCRIPTION (defined in src/candidate_selection/job_description.py) using a dedicated ScoreCrew to generate a candidateScore.
+candidate_scoring
+Uses ScoreCrew to asynchronously score each candidate’s bio against a job description (job_description.py).
 
-top_candidate_selection: Sorts the scored candidates and identifies the top 3 based on their compatibility scores.
+top_candidate_selection
+Sorts candidates based on scores and selects the top 3.
 
-email_generation: Asynchronously generates and saves personalized email responses for all candidates (acceptance for top candidates, rejection for others) using an HrResponse crew. Emails are saved as .txt files in the email_responses/ directory.
+email_generation
+Generates personalized emails via HrResponse crew and saves them to email_responses/.
 
-Project Structure
+🗂 Project Structure
 bash
-```
+Copy
+Edit
 .
 ├── src/
 │   ├── candidate_selection/
@@ -47,89 +52,101 @@ bash
 │   │   ├── leads.csv
 │   │   ├── main.py
 │   │   └── models.py
-├── email_responses/ (created after running)
-├── .env
+├── email_responses/          # Output emails generated
+├── .env                      # API keys (excluded from version control)
 ├── .gitignore
 ├── Dockerfile
 └── README.md
-Getting Started
-Prerequisites
+🧑‍💻 Getting Started
+✅ Prerequisites
 Python 3.9+
-```
-Docker (optional, for containerized deployment)
 
-Installation
+Docker (optional, for containerization)
+
+📦 Installation
 Clone the repository:
 
-Bash
-```
+bash
+Copy
+Edit
 git clone https://github.com/subhash-telugu/candidate_selection.git
 cd candidate_selection
-```
-Create a virtual environment (recommended):
+Create and activate a virtual environment:
 
-Bash
-```
+bash
+Copy
+Edit
 python -m venv venv
-source venv/bin/activate  # On Windows: `venv\Scripts\activate`
-```
+source venv/bin/activate      # Windows: venv\Scripts\activate
 Install dependencies:
-(You'll need a requirements.txt file. For now, here are the likely main ones:)
 
-Bash
-```
+bash
+Copy
+Edit
 pip install crewai pydantic
-```
-# You might also need specific LLM client libraries (e.g., openai, google-generativeai)
-# depending on your crew implementations and .env configuration.
-Self-correction: Based on typical CrewAI projects, you'll need crewai and pydantic. The LLM provider (e.g., OpenAI, Google Gemini) will also need its corresponding library if not handled purely by crewai's default integrations.
+You may also need:
 
-Set up your API Key:
-Create a .env file in the root directory of the project (if it doesn't exist) and add your LLM API key. For example:
+bash
+Copy
+Edit
+pip install openai  # or google-generativeai, depending on your LLM
+🔐 Set Up API Keys
+Create a .env file in the project root:
 
-
-Google Gemini:
-Bash
-```
+bash
+Copy
+Edit
 GOOGLE_API_KEY="your_google_api_key_here"
-```
-Make sure to never commit your .env file to version control (it's already in .gitignore, which is good!).
+# or for OpenAI:
+# OPENAI_API_KEY="your_openai_key_here"
+⚠️ .env is already included in .gitignore to protect secrets.
 
-Running the Application
-Prepare leads.csv:
-Ensure your leads.csv file is located at src/candidate_selection/leads.csv and contains candidate data with columns corresponding to your candidate Pydantic model (e.g., id, name, bio).
+▶️ Running the Application
+Prepare candidate data:
+Add candidates in src/candidate_selection/leads.csv using columns like id, name, bio.
 
-Define JOB_DESCRIPTION:
-Update the JOB_DESCRIPTION variable in src/candidate_selection/job_description.py with the actual job description you want to use for candidate evaluation.
+Set your job description:
+Update JOB_DESCRIPTION in src/candidate_selection/job_description.py.
 
-Run the main script:
+Run the application:
 
-Bash
-```
+bash
+Copy
+Edit
 python src/candidate_selection/main.py
-```
-(Note: Ensure the kickoff() call within main.py is uncommented or called appropriately for direct execution.)
+Ensure kickoff() is invoked in main.py.
 
-Output
-After successful execution, you will find generated email responses in the email_responses/ directory, with filenames corresponding to the candidate's name. The console will also display progress messages about candidate evaluation and email saving.
+📤 Output
+Generated email responses are saved in the email_responses/ folder.
 
-Customization
-Candidate Data: Modify src/candidate_selection/leads.csv to include your specific candidate information.
+Console will show evaluation progress and selected candidates.
 
-Job Description: Update src/candidate_selection/job_description.py for different roles.
+🔧 Customization
+What You Want to Change	How to Do It
+Candidate Data	Edit leads.csv
+Job Description	Modify job_description.py
+Scoring or Email Logic	Update crew.py in respective crews/ subfolders
+Number of Top Candidates	Change the slice in top_candidate_selection (e.g. l[0:5])
+LLM Model/Provider	Update agent config/ or .env as per provider’s API
 
-Agent Logic: Adjust the crew.py files within src/candidate_selection/crews/ (e.g., candidate_scoring/crew.py, emails_to_candidates/crew.py) to refine the scoring and email generation logic of the AI agents.
+🧰 Technologies Used
+Python: Core language
 
-Number of Top Candidates: Change l[0:3] in the top_candidate_selection method in main.py to select a different number of top candidates.
+CrewAI: Multi-agent orchestration
 
-LLM Model: Configure your CrewAI agents to use different LLM models by adjusting the config files within the crews subdirectories or by setting appropriate environment variables.
+Pydantic: Data validation
 
-Technologies Used
-Python
+asyncio: For async workflows
 
-CrewAI: For multi-agent orchestration and workflow management.
+LLM APIs: Google Gemini, OpenAI, etc.
 
-Pydantic: For robust data validation and settings management.
+📦 Docker Support (Optional)
+A Dockerfile is included for containerized deployment. Example build/run:
 
-asyncio: For efficient asynchronous operations, allowing parallel processing.
-
+bash
+Copy
+Edit
+docker build -t candidate-ai .
+docker run --env-file .env candidate-ai
+📬 Contact
+Feel free to contribute or raise issues on the GitHub Repository.
